@@ -24,33 +24,43 @@ class HomePage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Colors.black,
-                                  width: 1,
-                                  style: BorderStyle.solid),
+                          child: Text(
+                            "Sweeat",
+                            style: TextStyle(
+                              fontFamily: 'LogoFont',
+                              fontWeight: FontWeight.bold,
+                              fontSize: MediaQuery.of(context).size.height / 10,
+                              color: Color(0xff010101),
                             ),
-                            child: Text("Sweeat")),
-                        Text("Dummy text bhap bhaj!")
+                          ),
+                        ),
+                        Text(
+                          "forgotten taste you will never forget",
+                          style: TextStyle(
+                            fontFamily: 'MainFont',
+                            fontSize: 15,
+                            color: Color(0xff010101),
+                          ),
+                        )
                       ],
                     ),
                   ),
                   Container(
                     height: 45,
-                    width: MediaQuery.of(context).size.width * 0.7,
+                    width: MediaQuery.of(context).size.width * 0.4,
                     child: MaterialButton(
                       onPressed: () {},
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(999),
                       ),
-                      elevation: 5,
-                      color: Color(0xff5f4bfc),
+                      elevation: 0,
+                      color: Color(0xffb1eeef),
                       child: Text(
-                        "Login",
+                        "Skip",
                         style: TextStyle(
-                          fontFamily: 'SF Pro Display',
+                          fontFamily: 'MainFont',
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Color(0xff010101),
                         ),
                       ),
                     ),
