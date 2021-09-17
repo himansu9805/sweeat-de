@@ -8,7 +8,10 @@ This project is for our Design Engineering subject.
 
 ## Screenshots
 
-- Home Screen
-  ![alt](./screenshots/home_screen.png)
+### Onboarding Screens
+
+![alt](./screenshots/onboarding_1.png)
+![alt](./screenshots/onboarding_2.png)
+![alt](./screenshots/onboarding_3.png)
 
 `⚠ NOTE: This project is under development.`
