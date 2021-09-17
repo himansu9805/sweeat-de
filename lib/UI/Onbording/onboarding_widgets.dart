@@ -19,9 +19,10 @@ class OnBordingFirst extends StatelessWidget {
                 alignment: Alignment.center,
               ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(height: MediaQuery.of(context).size.height / 10),
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: Column(
@@ -48,6 +49,28 @@ class OnBordingFirst extends StatelessWidget {
                           ),
                         )
                       ],
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height / 10),
+                    height: 45,
+                    width: MediaQuery.of(context).size.width * 0.4,
+                    child: MaterialButton(
+                      onPressed: () {},
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      elevation: 0,
+                      color: Color(0xffb1eeef),
+                      child: Text(
+                        "Skip",
+                        style: TextStyle(
+                          fontFamily: 'MainFont',
+                          fontSize: 20,
+                          color: Color(0xff010101),
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -199,6 +222,28 @@ class OnBordingThird extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+              Align(
+                alignment: AlignmentDirectional.bottomEnd,
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.075,
+                  width: MediaQuery.of(context).size.height * 0.075,
+                  margin: EdgeInsets.only(right: 30, bottom: 30),
+                  child: FloatingActionButton(
+                    onPressed: () {
+                      /* Route route =
+                          MaterialPageRoute(builder: (context) => Login());
+                      Navigator.pushReplacement(context, route);*/
+                    },
+                    backgroundColor: Color(0xffDA70D9),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(999))),
+                    child: Icon(
+                      Icons.arrow_forward_rounded,
+                      size: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

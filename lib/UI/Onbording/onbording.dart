@@ -78,54 +78,6 @@ class _OnbordingState extends State<Onbording> {
                   ),
                 ],
               ),
-              Visibility(
-                visible: currentPageValue == 0 ? true : false,
-                child: Container(
-                  margin: EdgeInsets.only(bottom: screenheight / 10),
-                  height: 45,
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  child: MaterialButton(
-                    onPressed: () {},
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                    elevation: 0,
-                    color: Color(0xffb1eeef),
-                    child: Text(
-                      "Skip",
-                      style: TextStyle(
-                        fontFamily: 'MainFont',
-                        fontSize: 20,
-                        color: Color(0xff010101),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Visibility(
-                visible: currentPageValue == introWidgetsList.length - 1
-                    ? true
-                    : false,
-                child: Align(
-                  alignment: AlignmentDirectional.bottomEnd,
-                  child: Container(
-                    margin: EdgeInsets.only(right: 25, bottom: 25),
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        /* Route route =
-                          MaterialPageRoute(builder: (context) => Login());
-                      Navigator.pushReplacement(context, route);*/
-                      },
-                      backgroundColor: Color(0xffDA70D9),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(999))),
-                      child: Icon(
-                        Icons.arrow_forward,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
