@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Login/login.dart';
 
 class OnBordingFirst extends StatelessWidget {
   const OnBordingFirst({Key? key}) : super(key: key);
@@ -57,7 +58,11 @@ class OnBordingFirst extends StatelessWidget {
                     height: 45,
                     width: MediaQuery.of(context).size.width * 0.4,
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Route route =
+                            MaterialPageRoute(builder: (context) => Login());
+                        Navigator.pushReplacement(context, route);
+                      },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(999),
                       ),
@@ -231,9 +236,9 @@ class OnBordingThird extends StatelessWidget {
                   margin: EdgeInsets.only(right: 30, bottom: 30),
                   child: FloatingActionButton(
                     onPressed: () {
-                      /* Route route =
+                      Route route =
                           MaterialPageRoute(builder: (context) => Login());
-                      Navigator.pushReplacement(context, route);*/
+                      Navigator.pushReplacement(context, route);
                     },
                     backgroundColor: Color(0xffDA70D9),
                     shape: RoundedRectangleBorder(
