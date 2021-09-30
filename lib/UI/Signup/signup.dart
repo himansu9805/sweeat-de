@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:project_sweeat/UI/Signup/signup.dart';
 
-class Login extends StatefulWidget {
-  Login({Key? key}) : super(key: key);
+class Signup extends StatefulWidget {
+  Signup({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _SignupState createState() => _SignupState();
 }
 
-class _LoginState extends State<Login> {
+class _SignupState extends State<Signup> {
   double deviceWidth = 0.0;
   double deviceHeight = 0.0;
 
@@ -24,7 +23,7 @@ class _LoginState extends State<Login> {
           child: Stack(
             children: [
               Image.asset(
-                "assets/images/login_page.jpg",
+                "assets/images/signup_page.jpg",
                 fit: BoxFit.cover,
                 height: double.infinity,
                 width: double.infinity,
@@ -37,12 +36,12 @@ class _LoginState extends State<Login> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Login",
+                      "Signup",
                       style: TextStyle(
                         fontFamily: 'MainFont',
                         fontWeight: FontWeight.bold,
                         fontSize: deviceHeight * 0.075,
-                        color: Color(0xff010101),
+                        color: Colors.white,
                       ),
                     ),
                     Container(
@@ -56,6 +55,36 @@ class _LoginState extends State<Login> {
                           padding: EdgeInsets.symmetric(vertical: 50.0),
                           child: Column(
                             children: <Widget>[
+                              Container(
+                                width: deviceWidth * 0.7,
+                                child: TextField(
+                                  cursorColor: Color(0xff3a3a3a),
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.person_rounded,
+                                      color: Color(0xff3a3a3a),
+                                    ),
+                                    hintText: "Full name",
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'MainFont',
+                                      color: Color(0xff3a3a3a),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.transparent),
+                                      borderRadius: BorderRadius.circular(999),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color(0xffeaeaea),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.transparent),
+                                      borderRadius: BorderRadius.circular(999),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 20),
                               Container(
                                 width: deviceWidth * 0.7,
                                 child: TextField(
@@ -116,12 +145,33 @@ class _LoginState extends State<Login> {
                                 ),
                               ),
                               SizedBox(height: 20),
-                              Text(
-                                "Forgot password?",
-                                style: TextStyle(
-                                  fontFamily: 'MainFont',
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff202020),
+                              Container(
+                                width: deviceWidth * 0.7,
+                                child: TextField(
+                                  cursorColor: Color(0xff3a3a3a),
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.phone_rounded,
+                                      color: Color(0xff3a3a3a),
+                                    ),
+                                    hintText: "Phone number",
+                                    hintStyle: TextStyle(
+                                      fontFamily: 'MainFont',
+                                      color: Color(0xff3a3a3a),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.transparent),
+                                      borderRadius: BorderRadius.circular(999),
+                                    ),
+                                    filled: true,
+                                    fillColor: Color(0xffeaeaea),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.transparent),
+                                      borderRadius: BorderRadius.circular(999),
+                                    ),
+                                  ),
                                 ),
                               ),
                               SizedBox(height: 20),
@@ -141,9 +191,9 @@ class _LoginState extends State<Login> {
                                   focusElevation: 1,
                                   hoverElevation: 1,
                                   highlightElevation: 1,
-                                  color: Color(0xffc897c6),
+                                  color: Color(0xfff497c3),
                                   child: Text(
-                                    "Login",
+                                    "Next",
                                     style: TextStyle(
                                       fontFamily: 'MainFont',
                                       fontSize: 20,
@@ -155,7 +205,7 @@ class _LoginState extends State<Login> {
                               ),
                               SizedBox(height: 20),
                               Text(
-                                "or login with",
+                                "or signup with",
                                 style: TextStyle(
                                   fontFamily: 'MainFont',
                                   fontWeight: FontWeight.bold,
@@ -219,35 +269,6 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "New with us? ",
-                          style: TextStyle(
-                            fontFamily: 'MainFont',
-                            color: Colors.white,
-                            fontSize: 15.0,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Route route = MaterialPageRoute(
-                                builder: (context) => Signup());
-                            Navigator.pushReplacement(context, route);
-                          },
-                          child: Text(
-                            "Create account",
-                            style: TextStyle(
-                              fontFamily: 'MainFont',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15.0,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
                   ],
                 ),
               ),
