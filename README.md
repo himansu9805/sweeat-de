@@ -1,16 +1,17 @@
-# project_sweeat
+# Project Sweeat
 
-Design Engineering Project.
+This project is for our Design Engineering subject.
 
-## Getting Started
+## About
 
-This project is a starting point for a Flutter application.
+> The aim of this project is to preserve the taste and identity of regional sweets and delicacies. With this platform people can enjoy tastes from different parts of our country, and it will also help indigenous confectioner to boost their business and moral.
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+| Onboariding Screens                    |
+| -------------------------------------- |
+| ![alt](./screenshots/onboarding_1.png) |
+| ![alt](./screenshots/onboarding_2.png) |
+| ![alt](./screenshots/onboarding_3.png) |
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+`⚠ NOTE: This project is under development.`
