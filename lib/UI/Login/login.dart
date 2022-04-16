@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_sweeat/UI/Home/home.dart';
 import 'package:project_sweeat/UI/Signup/signup.dart';
 
 class Login extends StatefulWidget {
@@ -130,6 +131,10 @@ class _LoginState extends State<Login> {
                                 width: MediaQuery.of(context).size.width * 0.4,
                                 child: MaterialButton(
                                   onPressed: () {
+                                    Route route = MaterialPageRoute(
+                                        builder: (context) => Home());
+                                    Navigator.pushReplacement(context, route);
+
                                     /*Route route = MaterialPageRoute(
                                         builder: (context) => Login());
                                     Navigator.pushReplacement(context, route);*/
