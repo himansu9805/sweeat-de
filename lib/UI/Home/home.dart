@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_sweeat/UI/Cart/cart.dart';
+import 'package:project_sweeat/UI/Profile/profile.dart';
 
 import 'main_home.dart';
 import '../Maps/maps.dart';
@@ -17,14 +19,8 @@ class _Home extends State<Home> {
   static const List<Widget> _widgetOptions = <Widget>[
     MainHome(),
     Maps(),
-    Text(
-      'Index 2: Cart',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Profile',
-      style: optionStyle,
-    ),
+    Cart(),
+    Profile(),
   ];
 
   void _onItemTapped(int index) {
@@ -61,12 +57,18 @@ class _Home extends State<Home> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart_outlined),
-            activeIcon: Icon(Icons.shopping_cart_rounded),
+            activeIcon: Icon(
+              Icons.shopping_cart_rounded,
+              color: Color(0xffb4a4ce),
+            ),
             label: 'Cart',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person_rounded),
+            activeIcon: Icon(
+              Icons.person_rounded,
+              color: Colors.orange,
+            ),
             label: 'Cart',
           ),
         ],

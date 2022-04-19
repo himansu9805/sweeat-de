@@ -4,6 +4,8 @@ import "dart:math";
 
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
+import 'package:project_sweeat/Services/fetch_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainHome extends StatefulWidget {
   const MainHome({Key? key}) : super(key: key);
@@ -15,7 +17,7 @@ class MainHome extends StatefulWidget {
 class _MainHome extends State<MainHome> {
   double deviceWidth = 0.0;
   double deviceHeight = 0.0;
-
+  var _name;
   static const List<int> _avatarCircleColor = <int>[
     0xffff4164,
     0xfffa9b9b,
@@ -101,6 +103,17 @@ class _MainHome extends State<MainHome> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    FetchData.getMarker();
+    SharedPreferences.getInstance().then((SharedPreferences prefs) {
+      setState(() {
+        _name = prefs.getString('name').toString();
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     deviceWidth = MediaQuery.of(context).size.width;
     deviceHeight = MediaQuery.of(context).size.height;
@@ -161,10 +174,13 @@ class _MainHome extends State<MainHome> {
                       CircleAvatar(
                         backgroundColor: Color(_avatarCircleColor[
                             _random.nextInt(_avatarCircleColor.length)]),
-                        child: const Text(
-                          'AH',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
+                        child: _name == null
+                            ? CircularProgressIndicator()
+                            : Text(
+                                _name[0],
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
                       ),
                     ],
                   ),
@@ -179,6 +195,7 @@ class _MainHome extends State<MainHome> {
                     color: Color(0xfff6929b),
                     child: ListView(
                       scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
                       children: <Widget>[
                         Container(
                           width: deviceWidth * 0.75,

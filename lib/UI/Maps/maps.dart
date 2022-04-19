@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'locations.dart' as locations;
 
 class Maps extends StatefulWidget {
@@ -33,6 +34,7 @@ class _Maps extends State<Maps> {
 
   double deviceWidth = 0.0;
   double deviceHeight = 0.0;
+  var _name;
 
   static const List<int> _avatarCircleColor = <int>[
     0xffff4164,
@@ -43,6 +45,16 @@ class _Maps extends State<Maps> {
   ];
 
   final _random = new Random();
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPreferences.getInstance().then((SharedPreferences prefs) {
+      setState(() {
+        _name = prefs.getString('name').toString();
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,10 +135,13 @@ class _Maps extends State<Maps> {
                         CircleAvatar(
                           backgroundColor: Color(_avatarCircleColor[
                               _random.nextInt(_avatarCircleColor.length)]),
-                          child: const Text(
-                            'AH',
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
+                          child: _name == null
+                              ? CircularProgressIndicator()
+                              : Text(
+                                  _name[0],
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                ),
                         ),
                       ],
                     ),
