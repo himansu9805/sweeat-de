@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1081649292501",
+    "project_id": "de-sweeats",
+    "storage_bucket": "de-sweeats.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081649292501:android:05612ba2758c1131a6ee5c",
+        "android_client_info": {
+          "package_name": "com.example.project_sweeat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081649292501-gknv4f8vhpcupr1uvcqgs37i3d8khqbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA90BdSGjs7VOEZvBtAAKxrpGIBbqruDps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081649292501-gknv4f8vhpcupr1uvcqgs37i3d8khqbj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
