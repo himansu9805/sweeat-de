@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import "dart:math";
@@ -17,7 +18,7 @@ class MainHome extends StatefulWidget {
 class _MainHome extends State<MainHome> {
   double deviceWidth = 0.0;
   double deviceHeight = 0.0;
-  var _name;
+  var _name, _sweetData;
   static const List<int> _avatarCircleColor = <int>[
     0xffff4164,
     0xfffa9b9b,
@@ -27,85 +28,11 @@ class _MainHome extends State<MainHome> {
   ];
 
   final _random = new Random();
-  final List<Map> dishList = <Map>[
-    {
-      "name": "Dish Item Name 001",
-      "store": "Bhak and Sons",
-      "time": "999 hours",
-      "price": "9999",
-      "discount": "99",
-      "rating": "4.8"
-    },
-    {
-      "name": "Dish Item Name 002",
-      "store": "Bhak and Baps",
-      "time": "999 hours",
-      "price": "9999",
-      "discount": "99",
-      "rating": "4.6"
-    },
-    {
-      "name": "Dish Item Name 003",
-      "store": "Bhak and Patnis",
-      "time": "999 hours",
-      "price": "9999",
-      "discount": "99",
-      "rating": "4.2"
-    },
-    {
-      "name": "Dish Item Name 004",
-      "store": "Bhak and Sons",
-      "time": "999 hours",
-      "price": "9999",
-      "discount": "99",
-      "rating": "4.8"
-    },
-    {
-      "name": "Dish Item Name 005",
-      "store": "Bhak and Baps",
-      "time": "999 hours",
-      "price": "9999",
-      "discount": "99",
-      "rating": "4.6"
-    },
-    {
-      "name": "Dish Item Name 006",
-      "store": "Bhak and Patnis",
-      "time": "999 hours",
-      "price": "9999",
-      "discount": "99",
-      "rating": "4.2"
-    },
-    {
-      "name": "Dish Item Name 007",
-      "store": "Bhak and Sons",
-      "time": "999 hours",
-      "price": "9999",
-      "discount": "99",
-      "rating": "4.8"
-    },
-    {
-      "name": "Dish Item Name 008",
-      "store": "Bhak and Baps",
-      "time": "999 hours",
-      "price": "9999",
-      "discount": "99",
-      "rating": "4.6"
-    },
-    {
-      "name": "Dish Item Name 009",
-      "store": "Bhak and Patnis",
-      "time": "999 hours",
-      "price": "9999",
-      "discount": "99",
-      "rating": "4.2"
-    }
-  ];
+  final FirebaseFirestore fb = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
-    FetchData.getMarker();
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       setState(() {
         _name = prefs.getString('name').toString();
@@ -336,121 +263,232 @@ class _MainHome extends State<MainHome> {
                   child: GlowingOverscrollIndicator(
                     axisDirection: AxisDirection.down,
                     color: Color(0xfff6929b),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.all(20),
-                        itemCount: dishList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('stores')
+                          .snapshots(),
+                      builder: (_, snapshot) {
+                        if (snapshot.hasError)
+                          return Text('Error = ${snapshot.error}');
+
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text("Loading");
+                        }
+
+                        if (snapshot.hasData) {
+                          return ListView(
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(20),
+                            children: snapshot.data!.docs
+                                .map((DocumentSnapshot document) {
+                              Map<String, dynamic> data =
+                                  document.data()! as Map<String, dynamic>;
+                              var index =
+                                  Random().nextInt(data['items'].length);
+                              DocumentReference refer =
+                                  data['items'][index]['ref'];
+
+                              return Container(
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                      height: 100,
-                                      width: 100,
-                                      color: Colors.amberAccent,
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    Row(
                                       children: [
-                                        Text(
-                                          dishList[index]["name"],
-                                          style: TextStyle(
-                                            fontSize: deviceHeight * 0.0225,
-                                            fontFamily: 'MainFont',
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        Container(
+                                          height: 100,
+                                          width: 100,
+                                          child: StreamBuilder<
+                                                  DocumentSnapshot>(
+                                              stream: refer.snapshots(),
+                                              builder: (_, ss) {
+                                                if (ss.hasError)
+                                                  return Text(
+                                                      'Error = ${snapshot.error}');
+
+                                                if (ss.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return CircularProgressIndicator();
+                                                }
+
+                                                if (ss.hasData) {
+                                                  var obj = ss.data?.data()!
+                                                      as Map<String, dynamic>;
+
+                                                  return ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                    child: Image.network(
+                                                      obj["imageURL"],
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  );
+                                                }
+                                                return CircularProgressIndicator();
+                                              }),
                                         ),
-                                        Text(
-                                          dishList[index]["store"],
-                                          style: TextStyle(
-                                            fontSize: deviceHeight * 0.02,
-                                            fontFamily: 'MainFont',
-                                            fontStyle: FontStyle.italic,
-                                          ),
+                                        SizedBox(
+                                          width: 20,
                                         ),
-                                        Text(
-                                          "Delivers within " +
-                                              dishList[index]["time"],
-                                          style: TextStyle(
-                                              fontSize: deviceHeight * 0.0175,
-                                              fontFamily: 'MainFont',
-                                              color: Colors.black54),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
+                                            StreamBuilder<DocumentSnapshot>(
+                                                stream: refer.snapshots(),
+                                                builder: (_, ss) {
+                                                  if (ss.hasError)
+                                                    return Text(
+                                                        'Error = ${snapshot.error}');
+
+                                                  if (ss.connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return Text(
+                                                      "Loading",
+                                                      style: TextStyle(
+                                                        fontSize: deviceHeight *
+                                                            0.0225,
+                                                        fontFamily: 'MainFont',
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    );
+                                                  }
+
+                                                  if (ss.hasData) {
+                                                    var obj = ss.data?.data()!
+                                                        as Map<String, dynamic>;
+
+                                                    return Text(
+                                                      obj["Name"],
+                                                      style: TextStyle(
+                                                        fontSize: deviceHeight *
+                                                            0.0225,
+                                                        fontFamily: 'MainFont',
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    );
+                                                  }
+                                                  return Text(
+                                                    "Loading",
+                                                    style: TextStyle(
+                                                      fontSize:
+                                                          deviceHeight * 0.0225,
+                                                      fontFamily: 'MainFont',
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  );
+                                                }),
                                             Text(
-                                              "₹" + dishList[index]["price"],
+                                              data["name"],
                                               style: TextStyle(
-                                                fontSize: deviceHeight * 0.019,
+                                                fontSize: deviceHeight * 0.02,
                                                 fontFamily: 'MainFont',
+                                                fontStyle: FontStyle.italic,
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: 20,
-                                            ),
                                             Text(
-                                              "-" +
-                                                  dishList[index]["discount"] +
-                                                  "% OFF",
+                                              "Delivers within 999 hours",
                                               style: TextStyle(
                                                   fontSize:
-                                                      deviceHeight * 0.019,
+                                                      deviceHeight * 0.0175,
                                                   fontFamily: 'MainFont',
-                                                  color: Colors.redAccent),
+                                                  color: Colors.black54),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Text(
+                                                  "₹" +
+                                                      data["items"][index]
+                                                              ["price"]
+                                                          .toString(),
+                                                  style: TextStyle(
+                                                    fontSize:
+                                                        deviceHeight * 0.019,
+                                                    fontFamily: 'MainFont',
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Text(
+                                                  "-" +
+                                                      data["discount"]
+                                                          .toString() +
+                                                      "% OFF",
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          deviceHeight * 0.019,
+                                                      fontFamily: 'MainFont',
+                                                      color: Colors.redAccent),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
                                       ],
                                     ),
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: deviceWidth * 0.1125,
+                                            padding: EdgeInsets.all(5),
+                                            decoration: BoxDecoration(
+                                                color: data["items"][index]
+                                                            ["rating"] >
+                                                        3.5
+                                                    ? Colors.green.shade700
+                                                    : data["items"][index]
+                                                                ["rating"] >
+                                                            2
+                                                        ? Colors.yellow.shade700
+                                                        : Colors.red.shade700,
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(5))),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  child: Icon(
+                                                      Icons.star_rounded,
+                                                      color: Colors.white),
+                                                ),
+                                                Text(
+                                                  data["items"][index]["rating"]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                          deviceHeight * 0.016,
+                                                      fontFamily: 'MainFont',
+                                                      color: Colors.white),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
-                                Container(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            color: Colors.green.shade700,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(5))),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              child: Icon(Icons.star_rounded,
-                                                  color: Colors.white),
-                                            ),
-                                            Text(
-                                              dishList[index]["rating"],
-                                              style: TextStyle(
-                                                  fontSize:
-                                                      deviceHeight * 0.016,
-                                                  fontFamily: 'MainFont',
-                                                  color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+                              );
+                            }).toList(),
                           );
-                        }),
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    ),
                   ),
                 ),
               ),
