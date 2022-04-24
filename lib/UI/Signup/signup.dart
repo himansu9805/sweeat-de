@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project_sweeat/Services/fire_auth.dart';
 import 'package:project_sweeat/Services/validators.dart';
 import 'package:project_sweeat/UI/Home/home.dart';
+import 'package:project_sweeat/UI/Login/login.dart';
 
 class Signup extends StatefulWidget {
   Signup({Key? key}) : super(key: key);
@@ -305,7 +306,7 @@ class _SignupState extends State<Signup> {
                                                             MaterialPageRoute(
                                                                 builder:
                                                                     (context) =>
-                                                                        Home());
+                                                                        Login());
                                                         Navigator
                                                             .pushReplacement(
                                                                 context, route);

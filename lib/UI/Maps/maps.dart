@@ -2,8 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project_sweeat/Services/fetch_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'locations.dart' as locations;
 
 class Maps extends StatefulWidget {
   const Maps({Key? key}) : super(key: key);
@@ -15,20 +15,29 @@ class Maps extends StatefulWidget {
 class _Maps extends State<Maps> {
   final Map<String, Marker> _markers = {};
   Future<void> _onMapCreated(GoogleMapController controller) async {
-    final googleOffices = await locations.getGoogleOffices();
     setState(() {
       _markers.clear();
-      for (final office in googleOffices.offices) {
+      for (var shop in shops) {
         final marker = Marker(
-          markerId: MarkerId(office.name),
-          position: LatLng(office.lat, office.lng),
-          infoWindow: InfoWindow(
-            title: office.name,
-            snippet: office.address,
-          ),
-        );
-        _markers[office.name] = marker;
+            markerId: MarkerId(shop["name"]),
+            position: LatLng(shop["lat"], shop["lng"]),
+            infoWindow: InfoWindow(
+              title: shop["name"],
+              snippet: shop["address"].toString().substring(0, 45) + "...",
+            ));
+        _markers[shop["name"]] = marker;
       }
+      // for (final office in googleOffices.offices) {
+      //   final marker = Marker(
+      //     markerId: MarkerId(office.name),
+      //     position: LatLng(office.lat, office.lng),
+      //     infoWindow: InfoWindow(
+      //       title: office.name,
+      //       snippet: office.address,
+      //     ),
+      //   );
+      //   _markers[office.name] = marker;
+      // }
     });
   }
 
@@ -45,10 +54,20 @@ class _Maps extends State<Maps> {
   ];
 
   final _random = new Random();
+  List shops = [];
+
+  getShops() async {
+    var data = await FetchData.getAllStores();
+    //print(data);
+    setState(() {
+      shops = data;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    getShops();
     SharedPreferences.getInstance().then((SharedPreferences prefs) {
       setState(() {
         _name = prefs.getString('name').toString();
@@ -60,15 +79,19 @@ class _Maps extends State<Maps> {
   Widget build(BuildContext context) {
     deviceWidth = MediaQuery.of(context).size.width;
     deviceHeight = MediaQuery.of(context).size.height;
+    print(shops);
     return MaterialApp(
       home: Scaffold(
         body: Stack(
           children: [
             GoogleMap(
+              myLocationEnabled: false,
+              mapToolbarEnabled: false,
+              zoomControlsEnabled: false,
               onMapCreated: _onMapCreated,
               initialCameraPosition: const CameraPosition(
-                target: LatLng(0, 0),
-                zoom: 2,
+                target: LatLng(22.270508166428375, 70.78550014652416),
+                zoom: 14.0,
               ),
               markers: _markers.values.toSet(),
             ),
