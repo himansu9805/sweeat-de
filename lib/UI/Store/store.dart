@@ -144,7 +144,7 @@ class _StoreState extends State<Store> {
                                             children: [
                                               Icon(Icons.star_rounded),
                                               Text(data["store_rating"]
-                                                  .toString()),
+                                                  .toStringAsFixed(1)),
                                             ],
                                           ),
                                         ),
@@ -218,6 +218,7 @@ class _StoreState extends State<Store> {
                             ),
                             SizedBox(height: 20),
                             Container(
+                              margin: EdgeInsets.symmetric(horizontal: 8.0),
                               width: deviceWidth,
                               child: Text(
                                 "Menu",
@@ -247,7 +248,7 @@ class _StoreState extends State<Store> {
                                             : Colors.transparent,
                                       ),
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: 20.0, vertical: 10.0),
+                                          horizontal: 10.0, vertical: 10.0),
                                       child: Column(
                                         children: [
                                           StreamBuilder<DocumentSnapshot>(
@@ -395,62 +396,91 @@ class _StoreState extends State<Store> {
                                                             SizedBox(
                                                               height: 10,
                                                             ),
-                                                            Container(
-                                                              child: Container(
-                                                                height: 35,
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.175,
-                                                                child:
-                                                                    MaterialButton(
-                                                                  onPressed:
-                                                                      () {},
-                                                                  shape:
-                                                                      RoundedRectangleBorder(
-                                                                    side: BorderSide(
-                                                                        color: Color(
-                                                                            0xffc897c6)),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            10),
-                                                                  ),
-                                                                  elevation: 0,
-                                                                  focusElevation:
-                                                                      1,
-                                                                  hoverElevation:
-                                                                      1,
-                                                                  highlightElevation:
-                                                                      1,
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                          56,
-                                                                          200,
-                                                                          151,
-                                                                          198),
-                                                                  child: Text(
-                                                                    "ADD",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      fontFamily:
-                                                                          'MainFont',
-                                                                      fontSize:
-                                                                          deviceHeight *
-                                                                              0.018,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      color: Color(
-                                                                          0xffc897c6),
+                                                            !data["items"]
+                                                                        [index][
+                                                                    "available"]
+                                                                ? Container(
+                                                                    child: Text(
+                                                                      "Not available",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontFamily:
+                                                                            'MainFont',
+                                                                        fontSize:
+                                                                            deviceHeight *
+                                                                                0.018,
+                                                                        color: Colors
+                                                                            .redAccent,
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            )
+                                                                  )
+                                                                : Container(
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          35,
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.175,
+                                                                      child:
+                                                                          MaterialButton(
+                                                                        onPressed:
+                                                                            () {},
+                                                                        shape:
+                                                                            RoundedRectangleBorder(
+                                                                          side:
+                                                                              BorderSide(color: Color(0xffc897c6)),
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                        ),
+                                                                        elevation:
+                                                                            0,
+                                                                        focusElevation:
+                                                                            1,
+                                                                        hoverElevation:
+                                                                            1,
+                                                                        highlightElevation:
+                                                                            1,
+                                                                        color: Color.fromARGB(
+                                                                            56,
+                                                                            200,
+                                                                            151,
+                                                                            198),
+                                                                        child:
+                                                                            Text(
+                                                                          "ADD",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontFamily:
+                                                                                'MainFont',
+                                                                            fontSize:
+                                                                                deviceHeight * 0.018,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            color:
+                                                                                Color(0xffc897c6),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  )
                                                           ],
                                                         ),
                                                         Container(
+                                                          foregroundDecoration:
+                                                              !data["items"][
+                                                                          index]
+                                                                      [
+                                                                      "available"]
+                                                                  ? BoxDecoration(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      backgroundBlendMode:
+                                                                          BlendMode
+                                                                              .saturation,
+                                                                    )
+                                                                  : null,
                                                           height: 125,
                                                           width: 125,
                                                           child: ClipRRect(

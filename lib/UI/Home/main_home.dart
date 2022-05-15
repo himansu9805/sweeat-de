@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import "dart:math";
 
 import 'package:project_sweeat/Services/fetch_data.dart';
@@ -330,7 +331,7 @@ class _MainHome extends State<MainHome> {
                             height: 20,
                           ),
                           SizedBox(
-                            height: deviceHeight * 0.545,
+                            height: deviceHeight * 0.58,
                             width: deviceWidth,
                             child: Expanded(
                               child: ScrollConfiguration(
@@ -366,6 +367,10 @@ class _MainHome extends State<MainHome> {
                                             }
                                             var index = Random()
                                                 .nextInt(data['items'].length);
+                                            if (!data['items'][index]
+                                                ['available']) {
+                                              index++;
+                                            }
                                             DocumentReference refer =
                                                 data['items'][index]['ref'];
 

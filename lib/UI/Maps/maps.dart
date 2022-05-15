@@ -27,17 +27,6 @@ class _Maps extends State<Maps> {
             ));
         _markers[shop["name"]] = marker;
       }
-      // for (final office in googleOffices.offices) {
-      //   final marker = Marker(
-      //     markerId: MarkerId(office.name),
-      //     position: LatLng(office.lat, office.lng),
-      //     infoWindow: InfoWindow(
-      //       title: office.name,
-      //       snippet: office.address,
-      //     ),
-      //   );
-      //   _markers[office.name] = marker;
-      // }
     });
   }
 
@@ -80,100 +69,96 @@ class _Maps extends State<Maps> {
     deviceWidth = MediaQuery.of(context).size.width;
     deviceHeight = MediaQuery.of(context).size.height;
     print(shops);
-    return MaterialApp(
-      home: Scaffold(
-        body: Stack(
-          children: [
-            GoogleMap(
-              myLocationEnabled: false,
-              mapToolbarEnabled: false,
-              zoomControlsEnabled: false,
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: const CameraPosition(
-                target: LatLng(22.270508166428375, 70.78550014652416),
-                zoom: 14.0,
-              ),
-              markers: _markers.values.toSet(),
+    return Scaffold(
+      body: Stack(
+        children: [
+          GoogleMap(
+            myLocationEnabled: false,
+            mapToolbarEnabled: false,
+            zoomControlsEnabled: false,
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: const CameraPosition(
+              target: LatLng(22.270508166428375, 70.78550014652416),
+              zoom: 14.0,
             ),
-            Container(
-              child: Stack(
-                children: [
-                  Container(
-                    height: deviceHeight * 0.2,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                          "assets/images/maps_header.png",
-                        ),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.center,
+            markers: _markers.values.toSet(),
+          ),
+          Container(
+            child: Stack(
+              children: [
+                Container(
+                  height: deviceHeight * 0.2,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        "assets/images/maps_header.png",
                       ),
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          "Sweeat",
-                          style: TextStyle(
-                            fontFamily: 'LogoFont',
-                            fontWeight: FontWeight.bold,
-                            fontSize: 25,
-                            color: Colors.white,
-                          ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Sweeat",
+                        style: TextStyle(
+                          fontFamily: 'LogoFont',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                          color: Colors.white,
                         ),
-                        Container(
-                          width: deviceWidth * 0.6,
-                          child: TextField(
-                            cursorColor: Color(0xff3a3a3a),
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 5.0, horizontal: 15.0),
-                              suffixIcon: Icon(
-                                Icons.search,
-                                color: Color(0xff3a3a3a),
-                              ),
-                              hintText: "Search",
-                              hintStyle: TextStyle(
-                                fontFamily: 'MainFont',
-                                color: Color(0xff3a3a3a),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.transparent),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              filled: true,
-                              fillColor: Colors.white,
-                              focusedBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.transparent),
-                                borderRadius: BorderRadius.circular(15),
-                              ),
+                      ),
+                      Container(
+                        width: deviceWidth * 0.6,
+                        child: TextField(
+                          cursorColor: Color(0xff3a3a3a),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 5.0, horizontal: 15.0),
+                            suffixIcon: Icon(
+                              Icons.search,
+                              color: Color(0xff3a3a3a),
+                            ),
+                            hintText: "Search",
+                            hintStyle: TextStyle(
+                              fontFamily: 'MainFont',
+                              color: Color(0xff3a3a3a),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.transparent),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                           ),
                         ),
-                        CircleAvatar(
-                          backgroundColor: Color(_avatarCircleColor[
-                              _random.nextInt(_avatarCircleColor.length)]),
-                          child: _name == null
-                              ? CircularProgressIndicator()
-                              : Text(
-                                  _name[0],
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 15),
-                                ),
-                        ),
-                      ],
-                    ),
+                      ),
+                      CircleAvatar(
+                        backgroundColor: Color(_avatarCircleColor[
+                            _random.nextInt(_avatarCircleColor.length)]),
+                        child: _name == null
+                            ? CircularProgressIndicator()
+                            : Text(
+                                _name[0],
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -72,6 +72,7 @@ class _Cart extends State<Cart> {
   }
 
   setTotal() {
+    total = 0;
     staticData.forEach((element) {
       total += element["price"] * element["count"];
     });
